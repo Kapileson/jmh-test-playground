@@ -9,31 +9,32 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import java.util.concurrent.TimeUnit;
 
 @State(Scope.Benchmark)
-//@State(Scope.Group)
-public class jmh_03_State {
+public class jmh_04_Fixtures {
 
-   @Param({"1"})
-    public int arg;
+    @Setup(Level.Trial)
+    public void doSetup() {
+        System.out.println("Do Setup");
+    }
+
+    @TearDown(Level.Trial)
+    public void doTearDown() {
+        System.out.println("Do TearDown");
+    }
 
     @Benchmark
     @BenchmarkMode(Mode.SingleShotTime)
-    @Threads(2)
-/*  @Group("Test")
-    @GroupThreads(2)*/
+    @Threads(1)
     @Fork(1)
     @Warmup(iterations = 1,time = 1, timeUnit = TimeUnit.MILLISECONDS)
-    @Measurement(iterations = 1,time = 1, timeUnit = TimeUnit.MILLISECONDS)
+    @Measurement(iterations = 2,time = 1, timeUnit = TimeUnit.MILLISECONDS)
+    public void increment() {
 
-    public void increment(jmh_03_State state) {
-        state.arg++;
-        System.out.println(arg);
+        System.out.println("test");
     }
-
-
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(jmh_03_State.class.getSimpleName())
+                .include(jmh_04_Fixtures.class.getSimpleName())
                 .build();
         new Runner(opt).run();
 

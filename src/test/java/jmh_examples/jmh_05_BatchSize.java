@@ -1,6 +1,7 @@
 package jmh_examples;
 
 import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -8,28 +9,27 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.concurrent.TimeUnit;
 
-public class jmh_02_BenchmarkMode {
+@State(Scope.Benchmark)
+public class jmh_05_BatchSize {
+    int a = 0;
 
     @Benchmark
     @BenchmarkMode(Mode.SingleShotTime)
-    @Threads(1)
     @Fork(1)
-    @Warmup(iterations = 2,time = 1,timeUnit = TimeUnit.SECONDS)
-    @Measurement(iterations = 4,time = 1,timeUnit = TimeUnit.SECONDS)
+    @Warmup(iterations = 1)
+    @Measurement(iterations = 2, batchSize = 10)
     @OutputTimeUnit(TimeUnit.SECONDS)
-    public void microbenchmarkModes(){
-        StringBuilder stringBuilder = new StringBuilder(100);
-        stringBuilder.append("JMH");
-        stringBuilder.append("Microbenchmark");
-        stringBuilder.append("tests");
+    @Threads(1)
+    public void benchmarkHelloWorld() {
+        System.out.println("Current invocation is " +a++);
     }
+
 
     public static void main(String [] s) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(jmh_02_BenchmarkMode.class.getSimpleName())
+                .include(jmh_05_BatchSize.class.getSimpleName())
                 .build();
 
         new Runner(opt).run();
     }
-
 }
