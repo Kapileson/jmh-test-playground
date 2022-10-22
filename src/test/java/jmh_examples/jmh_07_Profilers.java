@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class jmh_09_Profilers {
+public class jmh_07_Profilers {
 
     @State(Scope.Benchmark)
     public static class StateObj {
@@ -24,9 +24,10 @@ public class jmh_09_Profilers {
     @BenchmarkMode(Mode.Throughput)
     @Threads(1)
     @Fork(1)
-    @Warmup(iterations = 1,time = 1, timeUnit = TimeUnit.MILLISECONDS)
+    @Warmup(iterations = 1,time = 1)
     @Measurement(iterations = 2,time = 1)
-    public boolean isValidEmail(jmh_09_Profilers.StateObj state) {
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public boolean isValidEmail(jmh_07_Profilers.StateObj state) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(state.emailAddress);
@@ -35,10 +36,10 @@ public class jmh_09_Profilers {
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(jmh_09_Profilers.class.getSimpleName())
+                .include(jmh_07_Profilers.class.getSimpleName())
                 .addProfiler(StackProfiler.class)
-                .addProfiler(GCProfiler.class)
-             //  .addProfiler(AsyncProfiler.class)
+//                .addProfiler(GCProfiler.class)
+//               .addProfiler(AsyncProfiler.class)
                 .build();
         new Runner(opt).run();
     }

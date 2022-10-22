@@ -12,13 +12,13 @@ import java.util.concurrent.TimeUnit;
 public class jmh_04_Fixtures {
 
     @Setup(Level.Trial)
-    public void doSetup() {
-        System.out.println("Do Setup");
+    public void setup() {
+        System.out.println("Do Setup...");
     }
 
     @TearDown(Level.Trial)
-    public void doTearDown() {
-        System.out.println("Do TearDown");
+    public void tearDown() {
+        System.out.println("Do TearDown...");
     }
 
     @Benchmark
@@ -27,8 +27,8 @@ public class jmh_04_Fixtures {
     @Fork(1)
     @Warmup(iterations = 1,time = 1, timeUnit = TimeUnit.MILLISECONDS)
     @Measurement(iterations = 2,time = 1, timeUnit = TimeUnit.MILLISECONDS)
-    public void increment() {
-
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public void print() {
         System.out.println("test");
     }
 
@@ -37,6 +37,5 @@ public class jmh_04_Fixtures {
                 .include(jmh_04_Fixtures.class.getSimpleName())
                 .build();
         new Runner(opt).run();
-
     }
 }

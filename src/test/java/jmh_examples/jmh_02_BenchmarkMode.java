@@ -11,12 +11,12 @@ import java.util.concurrent.TimeUnit;
 public class jmh_02_BenchmarkMode {
 
     @Benchmark
-    @BenchmarkMode(Mode.SingleShotTime)
+    @BenchmarkMode(Mode.Throughput)
     @Threads(1)
     @Fork(1)
-    @Warmup(iterations = 2,time = 1,timeUnit = TimeUnit.SECONDS)
-    @Measurement(iterations = 4,time = 1,timeUnit = TimeUnit.SECONDS)
-    @OutputTimeUnit(TimeUnit.SECONDS)
+    @Warmup(iterations = 2,time = 1)
+    @Measurement(iterations = 4,time = 1)
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public void microbenchmarkModes(){
         StringBuilder stringBuilder = new StringBuilder(100);
         stringBuilder.append("JMH");
@@ -28,8 +28,6 @@ public class jmh_02_BenchmarkMode {
         Options opt = new OptionsBuilder()
                 .include(jmh_02_BenchmarkMode.class.getSimpleName())
                 .build();
-
         new Runner(opt).run();
     }
-
 }

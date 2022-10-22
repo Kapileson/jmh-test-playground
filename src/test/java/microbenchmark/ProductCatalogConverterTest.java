@@ -30,7 +30,8 @@ public class ProductCatalogConverterTest {
     @Test
     public void baselineTest() throws RunnerException {
         double EXPECTED_TPT = 3000;
-        Options opt = new OptionsBuilder().include(ProductCatalogConverterTest.class.getSimpleName() + ".benchmarkProductCatalogConverter") //
+        Options opt = new OptionsBuilder()
+                .include(ProductCatalogConverterTest.class.getSimpleName() + ".benchmarkProductCatalogConverter")
                 .mode(Mode.Throughput)
                 .threads(50)
                 .forks(1)
@@ -50,7 +51,8 @@ public class ProductCatalogConverterTest {
     @Test
     public void loadTest() throws RunnerException {
         double EXPECTED_AVG_TIME = 0.02;
-        Options opt = new OptionsBuilder().include(ProductCatalogConverterTest.class.getSimpleName() + ".benchmarkProductCatalogConverter") //
+        Options opt = new OptionsBuilder()
+                .include(ProductCatalogConverterTest.class.getSimpleName() + ".benchmarkProductCatalogConverter")
                 .mode(Mode.AverageTime)
                 .threads(100)
                 .forks(1)
@@ -72,7 +74,8 @@ public class ProductCatalogConverterTest {
     @Test
     public void volumeTest() throws RunnerException {
         double EXPECTED_AVG_TIME = 0.02;
-        Options opt = new OptionsBuilder().include(ProductCatalogConverterTest.class.getSimpleName() + ".benchmarkProductCatalogConverter") //
+        Options opt = new OptionsBuilder()
+                .include(ProductCatalogConverterTest.class.getSimpleName() + ".benchmarkProductCatalogConverter")
                 .mode(Mode.SingleShotTime)
                 .param("filePath", "src/test/resources/product_catalog_50.xlsx")
                 .forks(1)
