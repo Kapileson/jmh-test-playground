@@ -18,8 +18,8 @@ public class jmh_06_DCE {
     @Measurement(iterations = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public void deadCodeElimination(Blackhole bh) {
-        addTwoNumbers();
-//        bh.consume(addTwoNumbers());
+          addTwoNumbers();
+//         bh.consume(addTwoNumbers());
     }
 
     private int addTwoNumbers(){

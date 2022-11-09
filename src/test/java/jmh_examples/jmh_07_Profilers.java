@@ -22,7 +22,7 @@ public class jmh_07_Profilers {
 
     @Benchmark
     @BenchmarkMode(Mode.Throughput)
-    @Threads(1)
+    @Threads(2)
     @Fork(1)
     @Warmup(iterations = 1,time = 1)
     @Measurement(iterations = 2,time = 1)
@@ -37,10 +37,13 @@ public class jmh_07_Profilers {
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(jmh_07_Profilers.class.getSimpleName())
-                .addProfiler(StackProfiler.class)
-//                .addProfiler(GCProfiler.class)
-//               .addProfiler(AsyncProfiler.class)
+                 .addProfiler(StackProfiler.class)
+                  .addProfiler(GCProfiler.class)
+                   .addProfiler(AsyncProfiler.class)
                 .build();
         new Runner(opt).run();
+
+        //DYLD_LIBRARY_PATH=/Applications/async-profiler-2.8.3-macos/build
     }
+
 }

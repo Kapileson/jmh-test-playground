@@ -16,7 +16,6 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
-
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
@@ -26,27 +25,12 @@ public class ProductCatalogConverterTest {
     @Param("src/test/resources/product_catalog.xlsx")
     String filePath;
 
-    //Determine the load baseline of 3000 RPS when 50 concurrent users access the method for 1 second
-    @Test
-    public void baselineTest() throws RunnerException {
-        double EXPECTED_TPT = 3000;
-        Options opt = new OptionsBuilder()
-                .include(ProductCatalogConverterTest.class.getSimpleName() + ".benchmarkProductCatalogConverter")
-                .mode(Mode.Throughput)
-                .threads(50)
-                .forks(1)
-                .warmupIterations(1)
-                .warmupTime(TimeValue.seconds(1))
-                .measurementIterations(1)
-                .measurementTime(TimeValue.seconds(1))
-                .timeUnit(TimeUnit.SECONDS)
-                .build();
-        Collection<RunResult> results = new Runner(opt).run();
-        Assert.assertTrue(getScore(results) >= EXPECTED_TPT);
+    @Benchmark
+    public void benchmarkProductCatalogConverter(Blackhole bh) throws FilloException {
+        bh.consume(ProductCatalogConverter.run(filePath));
     }
 
-
-    //Check that the average response time is less than 2 seconds
+    //Verify the average response time is less than 2 seconds
     // when 100 users access the method concurrently for 1 second
     @Test
     public void loadTest() throws RunnerException {
@@ -67,10 +51,29 @@ public class ProductCatalogConverterTest {
                 .build();
         Collection<RunResult> results = new Runner(opt).run();
         Assert.assertTrue(getScore(results) <= EXPECTED_AVG_TIME );
+
     }
 
+    //Verify the load baseline as 3000 RPS when 50 concurrent users access the method for 1 second
+    @Test
+    public void baselineTest() throws RunnerException {
+        double EXPECTED_TPT = 3000;
+        Options opt = new OptionsBuilder()
+                .include(ProductCatalogConverterTest.class.getSimpleName() + ".benchmarkProductCatalogConverter")
+                .mode(Mode.Throughput)
+                .threads(50)
+                .forks(1)
+                .warmupIterations(1)
+                .warmupTime(TimeValue.seconds(1))
+                .measurementIterations(1)
+                .measurementTime(TimeValue.seconds(1))
+                .timeUnit(TimeUnit.SECONDS)
+                .build();
+        Collection<RunResult> results = new Runner(opt).run();
+        Assert.assertTrue(getScore(results) >= EXPECTED_TPT);
+    }
 
-    //Determine the response time is less than 2 seconds for a single request with high volume
+    //Verify the response time is less than 2 seconds for a single request with high volume
     @Test
     public void volumeTest() throws RunnerException {
         double EXPECTED_AVG_TIME = 0.02;
@@ -90,11 +93,6 @@ public class ProductCatalogConverterTest {
                 .build();
         Collection<RunResult> results = new Runner(opt).run();
         Assert.assertTrue(getScore(results) <= EXPECTED_AVG_TIME );
-    }
-
-    @Benchmark
-    public void benchmarkProductCatalogConverter(Blackhole bh) throws FilloException {
-        bh.consume(ProductCatalogConverter.run(filePath));
     }
 
     private double getScore(Collection<RunResult> results) {

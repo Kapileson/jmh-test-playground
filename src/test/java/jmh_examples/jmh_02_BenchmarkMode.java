@@ -12,12 +12,12 @@ public class jmh_02_BenchmarkMode {
 
     @Benchmark
     @BenchmarkMode(Mode.Throughput)
-    @Threads(1)
+    @Threads(2)
     @Fork(1)
-    @Warmup(iterations = 2,time = 1)
-    @Measurement(iterations = 4,time = 1)
+    @Warmup(iterations = 1,time = 1, timeUnit = TimeUnit.MICROSECONDS)
+    @Measurement(iterations = 2,time = 1, timeUnit = TimeUnit.MICROSECONDS)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public void microbenchmarkModes(){
+    public void microbenchmarkModes() throws InterruptedException {
         StringBuilder stringBuilder = new StringBuilder(100);
         stringBuilder.append("JMH");
         stringBuilder.append("Microbenchmark");

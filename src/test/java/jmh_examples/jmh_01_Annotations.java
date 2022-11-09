@@ -5,7 +5,6 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-
 import java.util.concurrent.TimeUnit;
 
 public class jmh_01_Annotations {
@@ -14,13 +13,12 @@ public class jmh_01_Annotations {
     @Fork(1)
     @Warmup(iterations = 2,time = 1,timeUnit = TimeUnit.SECONDS)
     @Measurement(iterations = 3,time = 1,timeUnit = TimeUnit.SECONDS)
-    @OutputTimeUnit(TimeUnit.SECONDS)
     @Threads(2)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public void helloWorld() throws InterruptedException {
         Thread.sleep(1000);
         System.out.println("Hello World");
     }
-
     public static void main(String [] s) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(jmh_01_Annotations.class.getSimpleName())
