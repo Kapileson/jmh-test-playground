@@ -27,7 +27,7 @@ public class jmh_04_Fixtures {
     @Fork(1)
     @Warmup(iterations = 1,time = 1, timeUnit = TimeUnit.MILLISECONDS)
     @Measurement(iterations = 2,time = 1, timeUnit = TimeUnit.MILLISECONDS)
-    @OutputTimeUnit(TimeUnit.SECONDS)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public void print() throws InterruptedException {
         System.out.println("test");
     }

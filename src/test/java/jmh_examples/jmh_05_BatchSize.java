@@ -18,7 +18,7 @@ public class jmh_05_BatchSize {
     @Fork(1)
     @Warmup(iterations = 1)
     @Measurement(iterations = 1, batchSize = 10)
-    @OutputTimeUnit(TimeUnit.SECONDS)
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public void printCurrentIteration() {
         System.out.println("Current invocation is " + a++);
     }

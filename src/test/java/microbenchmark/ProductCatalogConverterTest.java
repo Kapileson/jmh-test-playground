@@ -50,8 +50,8 @@ public class ProductCatalogConverterTest {
                 .addProfiler(AsyncProfiler.class)
                 .build();
         Collection<RunResult> results = new Runner(opt).run();
-        Assert.assertTrue(getScore(results) <= EXPECTED_AVG_TIME );
-
+        Assert.assertTrue("\nActual ["+getScore(results)+"]\nExpected ["+EXPECTED_AVG_TIME+"]",
+                getScore(results) <= EXPECTED_AVG_TIME);
     }
 
     //Verify the load baseline as 3000 RPS when 50 concurrent users access the method for 1 second

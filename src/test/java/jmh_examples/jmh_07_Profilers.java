@@ -25,8 +25,8 @@ public class jmh_07_Profilers {
     @Threads(2)
     @Fork(1)
     @Warmup(iterations = 1,time = 1)
-    @Measurement(iterations = 2,time = 1)
-    @OutputTimeUnit(TimeUnit.SECONDS)
+    @Measurement(iterations = 1,time = 1)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public boolean isValidEmail(jmh_07_Profilers.StateObj state) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
